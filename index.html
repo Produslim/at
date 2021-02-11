@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+<script src="js/jquery.min.js"></script>
+
+    <script>
+    function set_validator_errors(){
+        orderValidator.errorTitle = 'Bitte korrigieren sie die folgenden Fehler'; 
+
+        orderValidator.errorNameField = 'Name'; 
+        orderValidator.errorNameMess = 'Gib deinen Namen ein'; 
+        
+        orderValidator.errorPhoneField = 'Telefonnummer'; 
+        orderValidator.errorPhoneMess = 'Geben Sie die richtige Telefonnummer ein'; 
+        
+        orderValidator.errorAddress = 'Geben Sie die richtige Adresse ein'; 
+        orderValidator.errorRequired = 'Pflichtfeld'; 
+        orderValidator.errorMaxLength = 'Gültiges maximales {1} Zeichen'; 
+        orderValidator.errorMinLength = 'gültiges Mindestzeichen {1}'; 
+        orderValidator.errorEmailField = 'E-Mail-Adresse';
+        orderValidator.errorEmail = 'Ungültige E-Mail angegeben';
+        }
+    </script>
+    
+<script>
+
+
+
+    
+    setOffer: function (offerId) {
+        if (offerId == this._setOfferId) {
+            return ;
+        }
+        this._setOfferId = offerId;
+        if (offerId) {
+            var offer = app.offers[offerId];
+            var previousOffer = app.currentOffer;
+            app.currentOffer = offer;
+            var event = this.jq.Event("offerchange");
+            event.previousOffer = previousOffer;
+            event.currentOffer = app.currentOffer;
+            this.jq(document).trigger(event);
+            this.updatePage(offer);
+        } else {
+            $('input[name=country]').val('');
+        }
+    },
+    
+    updatePage: function(offer) {
+        $('x-newprice').html(offer.price);
+        $('x-oldprice').html(offer.price2);
+        $('x-currency').html(offer.currency.name);
+        $('input[name=offer], select[name=offer]').val(offer.id);
+        $('input[name=country]').val(offer.country.code);
+    },
+
+    blockForm: function() {
+        // Блокируем кнопки при отправке формы
+        $('input[type=submit]', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        $('button', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        app.incompleteOrder.lock = true;
+        clearTimeout(app.incompleteOrder.timer);
+    },
+
+    unblockForm: function() {
+        $('input[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        $('button[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        app.incompleteOrder.lock = false;
+        clearTimeout(app.incompleteOrder.timer);
+    }
+
+};
+
+
+</script><script src="js/form.validate.js"></script>
+<script src="js/form.incomplete.js"></script>
+<script src="js/main2.js"></script>
+
+
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1" id="viewport">
+	<link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/common.css">
+	<title>ProduSlim</title>
+	<link rel="icon" href="favicon.ico">
+
+	<script src="js/jquery.min_1.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+</head>
+
+<body class="lang_de page_home page_cod">
+
+	<div class="page_wrapper">
+		<div class="warning_block">
+			<div class="wrapper">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="warning">
+								<p class="lt0"><span>ACHTUNG: </span>An dem haben wir nur noch <i class="date">52</i>
+									Artikel verfügbar.</p>
+								<a href="#unic_form"><div class="close"></div></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<section class="header">
+			<div class="wrapper">
+				<div class="top_line">
+					<img alt="" class="top_line__logo" src="images/logo.png">
+					<div class="top_line__description lt1">
+						Verbrennen Sie Fett, um Ihre versteckte formschöne Figur freizusetzen
+					</div>
+				</div>
+				<div class="header__site_title">
+					<div class="header__container">
+						<h1 class="lt2">VERBRENNEN SIE <br>ES NATÜRLICH</h1>
+						<div class="lt3">
+							bis zu 30 Kilos Fett pro Kur ohne anstrengende
+						</div>
+						<div class="lt4">
+							Diäten und Übungen!
+						</div>
+					</div>
+				</div>
+				<div class="header__colums">
+					<div class="header__wooman"></div>
+					<div class="header__left">
+						<ul class="header__list">
+							<li class="header__list__item lt5">Unterdrückt den Appetit</li>
+							<li class="header__list__item lt6">Belebt den Körper</li>
+							<li class="header__list__item lt7">Beschleunigt die Fettverbrennung</li>
+							<li class="header__list__item lt8">Verhindert die Spaltung von Kohlenhydraten</li>
+							<li class="header__list__item lt9">Normalisiert den Stoffwechsel</li>
+						</ul>
+						<div class="header__product">
+							<ul class="header__ser_list">
+								<li class="header__ser_item"></li>
+								<li class="header__ser_item"></li>
+								<li class="header__ser_item"></li>
+							</ul>
+						</div>
+					</div>
+					<div class="header__right">
+						<div class="form_top header__form" id="form2">
+							<div id="scroll_to_form"></div>
+							<div class="form_top__discount lt10">
+								-50%
+							</div>
+							<div class="form_top__price_container">
+								<div class="form_top__price_old">
+									<div class="form_top__price_old_label lt11">
+										Verkauf:
+									</div>
+									<div class="form_top__price_old_value"><span class="old_price_val"><x-oldprice>99.80</x-oldprice></span>
+										<span class="old_price_cur"><x-currency>€</x-currency></span></div>
+								</div>
+								<div class="form_top__price_new">
+									<div class="form_top__price_val">
+										<span class="new_price_val"><x-newprice>49.90</x-newprice></span> <span class="new_price_cur"><x-currency>€</x-currency></span>
+										<div class="form_top__icon_new lt14">
+											Neu!
+										</div>
+									</div>
+									<div class="form_top__price_label lt15">
+										+ <span>SCHNELLE </span>LIEFERUNG
+									</div>
+								</div>
+							</div>
+							<div class="timer" data-timer="">
+								<div class="unit days" data-pattern="00">
+									<div class="value">00</div>
+									<div class="desc lt16">
+										Tage
+									</div>
+								</div>
+								<div class="unit hours" data-pattern="{hnn}">
+									<div class="value">00</div>
+									<div class="desc lt17">
+										Stunden
+									</div>
+								</div>
+								<div class="unit minutes" data-pattern="{mnn}">
+									<div class="value">00</div>
+									<div class="desc lt18">
+										Minuten
+									</div>
+								</div>
+								<div class="unit seconds" data-pattern="{snn}">
+									<div class="value">00</div>
+									<div class="desc lt19">
+										Sekunden
+									</div>
+								</div>
+							</div>
+							<div class="form_top__title lt20">
+								Bestellen mit <span>50% Rabatt!</span>
+							</div>
+							<form class="form landing__form" action="https://healthbestblog.space/cpatl/api.php" method="post" id="unic_form">
+								    
+    <select name="offer" class="form-control country_chang" style="display: none;">
+        <option data-country-code="AT" selected="selected" value="22359">
+            Австрия        </option>
+    </select>
+
+      
+								<div class="form_top__field form_top__field-name">
+									<input class="form_top__input" type="text" name="name" placeholder="Ihr Name:" required>
+								</div>
+								<div class="form_top__field form_top__field-phone">
+									<input class="form_top__input" type="tel" name="phone" placeholder="+43 123456789" required>
+								</div>
+								<button class="submit_form form_top__submit" type="submit"><span class="big lt22">BESTELLEN</span></button>
+												        <input type="hidden" name="stream_hid" value="xlDU59ny">
+      <input type="hidden" name="offer_id" value="5636">
+
+      
+      <input type="hidden" name="country" value="AT"> 
+
+      <input type="hidden" name="sid1" value="alex">
+      <input type="hidden" name="sid2" value="alex2">
+      <input type="hidden" name="sid3" value="alex3">
+      <input type="hidden" name="redirect_url" value="https://amazinghealth.github.io/germitox-ita/success/index.html">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="tv_logos">
+			<div class="wrapper tv_logos__wrapper">
+				<div class="tv_logos__label lt23">
+					Wie gesehen bei:
+				</div>
+				<div class="tv_logos__list">
+					<div class="tv_logos__item"><img src="images/logo_tv_1.png" alt=""></div>
+					<div class="tv_logos__item"><img src="images/logo_tv_2.png" alt=""></div>
+					<div class="tv_logos__item"><img src="images/logo_tv_3.png" alt=""></div>
+					<div class="tv_logos__item"><img src="images/logo_tv_4.png" alt=""></div>
+					<div class="tv_logos__item"><img src="images/logo_tv_5.png" alt=""></div>
+					<div class="tv_logos__item"><img src="images/logo_tv_6.png" alt=""></div>
+				</div>
+			</div>
+		</div>
+		<div class="mapping">
+			<div class="wrapper">
+				<div class="mapping__desc lt24">
+					Fast 50% aller Europäer leiden an Übergewicht und können nicht erkennen, wie schädlich es für ihren
+					Körper ist. Adipositas ist der Grund für fast 40% der Herzerkrankungen, die zu tödlichen Folgen
+					führen können.
+				</div>
+				<div class="mapping__columns">
+					<div class="mapping__column_left">
+						<div class="mapping__list__title lt25">
+							Fettleibigkeit erhöht das Risiko von:
+						</div>
+						<div class="mapping__list">
+							<div class="mapping__list__item">
+								<span class="lt26">Nicht-alkoholischer Fettleber-Krankheit;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt27">Fruchtbarkeitsproblemen;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt28">Typ-2-Diabetes;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt29">Herzinfarkt;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt30">Herz-Kreislauf-Erkrankungen;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt31">Hochblütdrück;</span>
+							</div>
+							<div class="mapping__list__item">
+								<span class="lt32">Koronarer Herzkrankheit.</span>
+							</div>
+						</div>
+					</div>
+					<div class="mapping__column_right"><img alt="" src="images/map.png"></div>
+				</div>
+			</div>
+		</div>
+		<div class="why_fight">
+			<div class="wrapper">
+				<div class="why_fight__columns">
+					<div class="why_fight__right">
+						<div class="why_fight__title lt33">
+							Warum Übergewicht bekämpfen?
+						</div>
+						<div class="slider_container">
+							<ul class="why_fight__list" style="">
+								<li aria-hidden="false" class="why_fight__item">
+									<div class="why_fight__item__title">
+										<div class="why_fight__item__procent lt34">
+											70%
+										</div>
+										<strong class="lt35">Der Herz-Kreislauf-Erkrankungen beginnen mit
+											Adipositas</strong>
+									</div>
+									<div class="why_fight__description lt36">
+										Experten liefern Daten, dass etwa 70% der Herz-Kreislauf-Erkrankungen mit
+										Übergewicht beginnen. Das Übergewicht führt zu hohem Blutdruck und erhöhtem
+										Cholesterinspiegel, was Herzprobleme verursacht, die tödlich sein können
+									</div>
+								</li>
+								<li aria-hidden="true" class="why_fight__item" style="">
+									<div class="why_fight__item__title">
+										<div class="why_fight__item__procent lt37">
+											40%
+										</div>
+										<strong class="lt38">Übergewichtige Menschen werden aufgrund ihres Gewichts vom
+											Service abgelehnt</strong>
+									</div>
+									<div class="why_fight__description lt39">
+										Für manche kann es als sehr unhöflich angesehen werden, aber es ist wahr. Im
+										letzten Jahr gab es Fälle, in denen übergewichtigen Passagieren aufgrund ihres
+										Übergewichts der Bordservice von Flugzeugen, Schiffen und sogar öffentlichen
+										Verkehrsmitteln verweigert
+										wurde.
+									</div>
+								</li>
+								<li aria-hidden="true" class="why_fight__item">
+									<div class="why_fight__item__title">
+										<div class="why_fight__item__procent lt40">
+											86%
+										</div>
+										<strong class="lt41">Die Männer gehen nicht auf Date mit einer übergewichtigen
+											Frau</strong>
+									</div>
+									<div class="why_fight__description lt42">
+										Es mag hart klingen, aber es stimmt, die meisten Männer betrachten
+										übergewichtige Frauen als unattraktiv. Experten geben verschiedene Gründe dafür
+										an, wie "Nicht den Standards der Schönheit zu entsprechen", "Nicht den Standards
+										eines gesunden Lebensstils
+										zu entsprechen" und so weiter. Unabhängig von den Gründen sind die Ergebnisse
+										gleich. Männer mögen in der Regel keine übergewichtigen Frauen.
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div class="why_fight__img"><img alt="" src="images/fat_woman.png"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="never_help">
+			<div class="wrapper">
+				<div class="never_help__title lt43">
+					Warum helfen Diäten, Sport und andere beliebte <strong>Methoden nicht? </strong>
+				</div>
+				<div class="slider_container">
+					<div class="never_help__list" style="">
+						<div aria-hidden="false" class="never_help__item">
+							<div class="never_help__item__image"><img alt="" src="images/help_1.jpg"></div>
+							<div class="never_help__item__name lt44">
+								Diät
+							</div>
+							<div class="never_help__item__desc lt45">
+								Wenn Sie aufhören, gleiche Menge zu essen, die Sie zuvor gegessen haben, wird der Körper
+								es als eine Bedrohung für Ihr Überleben betrachten. Daher wird es jedes Stück Nahrung in
+								Ihren Körper saugen, um die Diät zu bekämpfen.
+							</div>
+						</div>
+						<div aria-hidden="true" class="never_help__item" style="">
+							<div class="never_help__item__image"><img alt="" src="images/help_2.jpg"></div>
+							<div class="never_help__item__name lt46">
+								Fitnessstudio
+							</div>
+							<div class="never_help__item__desc lt47">
+								Körperliche Übungen waren immer eine Antwort auf Übergewicht, aber nicht jeder hat genug
+								Zeit oder Motivation, um mit dem Sport zu beginnen. Deshalb fangen viele Menschen
+								einfach an zu trainieren und geben dann aufgrund von Zeitmangel auf. Kein Ergebnis
+								am Ende.
+							</div>
+						</div>
+						<div aria-hidden="true" class="never_help__item" style="">
+							<div class="never_help__item__image"><img alt="" src="images/help_3.jpg"></div>
+							<div class="never_help__item__name lt48">
+								Medizinische Lösung
+							</div>
+							<div class="never_help__item__desc lt49">
+								Medizinische Lösung kann die Abhängigkeit Ihres Körpers von medizinischen Produkten
+								verursachen, da Sie natürlichen Zutaten keine Chance geben, Fettleibigkeit zu bekämpfen.
+								So können Sie im moralischen Dilemma stecken: "Suchtgefahr oder Übergewicht?"
+							</div>
+						</div>
+						<div aria-hidden="true" class="never_help__item">
+							<div class="never_help__item__image"><img alt="" src="images/help_4.jpg"></div>
+							<div class="never_help__item__name lt50">
+								Fettabsaugung
+							</div>
+							<div class="never_help__item__desc lt51">
+								Der schlimmste Fall ist Fettabsaugung, bei der Sie eine Menge Geld für die Verformung
+								Ihres Körpers zahlen und das Fett trotzdem zurückkehrt! Unser Körper wird versuchen,
+								künstlich entferntes Fett zurückzuerlangen. Also, müssen Sie wirklich Geld bezahlen,
+								um sich selbst hässlich zu machen und auf lange Sicht Fett zurückzubekommen?
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<div class="lose_chance">
+			<div class="wrapper">
+				<button class="submit_form scroll_to_button form_top__submit show_mobile" type="submit"><span class="lt66">Bestellen</span></button>
+				<div class="lose_chance__image">
+					<div class="box"></div>
+				</div>
+				<div class="lose_chance__text">
+					<div class="lose_chance__title lt67">
+						Verpassen Sie Ihre Chance nicht,
+					</div>
+					<div class="lose_chance__desc lt68">
+						die neueste Innovation in der Diätologie zu verwenden!
+					</div>
+					<a class="scroll_to_button" href="#scroll_to_form"><button class="submit_form scroll_to_button form_top__submit" type="submit"><span class="lt69">Bestellen</span></button></a>
+				</div>
+			</div>
+		</div>
+		<div class="natural">
+			<div class="wrapper">
+				<div class="natural__title lt70">
+					Die einzige Kombination von natürlichen Zutaten,
+					<span>die Fett 2-3 mal effektiver verbrennt</span>
+				</div>
+				<div class="natural__product">
+					<div class="natural__product__image"></div>
+					<div class="slider_container">
+						<ul class="natural__list" style="">
+							<li aria-hidden="false" class="natural__list__item">
+								<div class="box">
+									<div class="natural__list__item__image"><img alt="" src="images/effect_1.jpg"></div>
+									<div class="natural__list__item__text">
+										<div class="natural__list__item__title lt71">
+											Goji- Beeren Extrakt
+										</div>
+										<div class="natural__list__item__desc lt72">
+											In Goji-Beeren gibt es eine große Menge an Antioxidantien. Sie beschleunigen
+											den Abbau von Fettzellen und werden Energie frei.
+										</div>
+									</div>
+								</div>
+								<div class="natural__list__item__desc show_mobile lt73">
+									Unterdrückt den Hunger, erhöht die Lebhaftigkeit, erhöht die Energie, beschleunigt
+									den Verbrauch von Fettreserven.
+								</div>
+							</li>
+							<li aria-hidden="true" class="natural__list__item natural__list__item_even" style="">
+								<div class="box">
+									<div class="natural__list__item__image"><img alt="" src="images/effect_2.jpg"></div>
+									<div class="natural__list__item__text">
+										<div class="natural__list__item__title lt74">
+											Grüntee-Extrakt
+										</div>
+										<div class="natural__list__item__desc lt75">
+											Leitet überschüssige Flüssigkeit aus dem Körper, regt den Stoffwechsel an
+											und reduziert Stress durch Gewichtsverlust.
+										</div>
+									</div>
+								</div>
+								<div class="natural__list__item__desc show_mobile lt76">
+									Leitet überschüssige Flüssigkeit aus dem Körper, regt den Stoffwechsel an und
+									reduziert Stress durch Gewichtsverlust.
+								</div>
+							</li>
+							<li aria-hidden="true" class="natural__list__item" style="">
+								<div class="box">
+									<div class="natural__list__item__image"><img alt="" src="images/effect_3.jpg"></div>
+									<div class="natural__list__item__text">
+										<div class="natural__list__item__title lt77">
+											Hibiskus oder Rosella Extrakt
+										</div>
+										<div class="natural__list__item__desc lt78">
+											Senkt den Cholesterinspiegel im Blut, fördert die Reinigung und wirkt als
+											Antioxidans. Senkt "schädliches " Cholesterin und Zucker im Blut, verbessert
+											den Stoffwechsel, leitet Toxine und Schlacken aus, lindert Schwellungen.
+										</div>
+									</div>
+								</div>
+								<div class="natural__list__item__desc show_mobile lt79">
+									Beschleunigt den Fettabbau, blockiert die Spaltung von Kohlenhydraten, reduziert den
+									glykämischen Index, bewahrt das Muskelgewebe.
+								</div>
+							</li>
+							<li aria-hidden="true" class="natural__list__item natural__list__item_even" style="">
+								<div class="box">
+									<div class="natural__list__item__image"><img alt="" src="images/effect_4.jpg"></div>
+									<div class="natural__list__item__text">
+										<div class="natural__list__item__title lt80">
+											Guarana-Samen-Extrakt
+										</div>
+										<div class="natural__list__item__desc lt81">
+											Beschleunigt die metabolischen Prozesse im Körper und fördert die
+											Fettverbrennung. Das Problem des Übergewichts wird nicht chemisch, sondern
+											biologisch gelöst, so dass ein stabiles Gewicht nach dem Abnehmen
+											gewährleistet ist.
+										</div>
+									</div>
+								</div>
+								<div class="natural__list__item__desc show_mobile lt82">
+									Aktiviert die Produktion von Energie, erhöht die Ausdauer und Effizienz des
+									Immunsystems.
+								</div>
+							</li>
+							<li aria-hidden="true" class="natural__list__item natural__list__item_last">
+								<div class="box">
+									<div class="natural__list__item__image"><img alt="" src="images/effect_5.jpg"></div>
+									<div class="natural__list__item__text">
+										<div class="natural__list__item__title lt83">
+											Acetyl-L-Carnitin
+										</div>
+										<div class="natural__list__item__desc lt84">
+											Wenn es ins Verdauungssystem gelangt, bildet es ein klebriges Gel, das die
+											Aufnahme von Fetten verhindert und Giftstoffe entfernt.
+										</div>
+									</div>
+								</div>
+								<div class="natural__list__item__desc show_mobile lt85">
+									Wenn es ins Verdauungssystem gelangt, bildet es ein klebriges Gel, das die Aufnahme
+									von Fetten verhindert und Giftstoffe entfernt.
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		<section class="reviews">
+			<div class="wrapper">
+				<div class="container">
+					<div class="title lt132">
+						Was schreiben uns die Menschen normalerweise nach der Einnahme von ProduSlim?
+					</div>
+					<div class="slider_container">
+						<ul class="reviews_slider">
+							<li class="slide">
+								<div class="icon">
+									<img src="images/review_1.png" alt="">
+									<div class="before lt133">
+										vorher
+									</div>
+									<div class="after lt134">
+										nachher
+									</div>
+								</div>
+								<div class="description">
+									<div class="review_head">
+										<div class="name lt140">
+											Lena Meyer <span>26 Jahre, Berlin</span>
+										</div>
+										<div class="stars"></div>
+									</div>
+									<div class="review_body">
+										<div class="caption lt141">
+											Erstaunlicher Effekt zum erstaunlichen Preis!
+										</div>
+										<div class="text">
+											<p class="lt142">Ich habe alles ausprobiert, beginnend von verschiedenen
+												Diäten, Fitness, Volksmedizin und sogar medizinischen Pillen. Nichts hat
+												mir so geholfen wie ProduSlim. Ich habe
+												in zwei Monaten etwa 20 kilos abgenommen und das ist erst der Anfang.
+												Mein Blutdruck und Cholesterinspiegel kamen zur Norm. Das Produkt ist
+												erstaunlich und vor allem der Preis! Es ist einfach großartig.
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="slide">
+								<div class="icon">
+									<img src="images/review_2.png" alt="">
+									<div class="before lt143">
+										vorher
+									</div>
+									<div class="after lt144">
+										nachher
+									</div>
+								</div>
+								<div class="description">
+									<div class="review_head">
+										<div class="name lt145">
+											Julia Perle<span> 35 Jahre, Hamburg</span>
+										</div>
+										<div class="stars"></div>
+									</div>
+									<div class="review_body">
+										<div class="caption lt146">
+											Meine Freunde beneiden mich um meine perfekte Taille
+										</div>
+										<div class="text">
+											<p class="lt147">Ich mag den Effekt von ProduSlim. Ich verlor an Gewicht und
+												bekam meine Taille zurück, die ich hatte, als ich jung war. Nun beneiden
+												mich meine Freunde um meine perfekte Taille und all das wurde möglich
+												durch
+												ProduSlim!
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
+							<li class="slide">
+								<div class="icon">
+									<img src="images/review_3.png" alt="">
+									<div class="before lt148">
+										vorher
+									</div>
+									<div class="after lt149">
+										nachher
+									</div>
+								</div>
+								<div class="description">
+									<div class="review_head">
+										<div class="name lt150">
+											Hilda Richter <span>40 Jahre, Essen</span>
+										</div>
+										<div class="stars"></div>
+									</div>
+									<div class="review_body">
+										<div class="caption lt151">
+											Hilft auch in den schlimmsten Situationen
+										</div>
+										<div class="text">
+											<p class="lt152">Vor ungefähr vier Monaten war mein Gewicht 136 kilos. Dass
+												es schlecht für meine Gesundheit war, braucht man gar nicht zu sagen.
+												Ich hatte Probleme, mich von einem Ort zum anderen zu bewegen. ProduSlim
+												hat dieses
+												Problem vollständig beseitigt. Mein Herzschlag normalisierte sich, der
+												Cholesterinspiegel und der Blutdruck nahmen ab. Ich habe den
+												professionellen Programmkurs von ProduSlim benutzt und ungefähr 46 kilos
+												abgenommen. Ich bin immer noch dabei, Gewicht zu verlieren, da ich
+												diesen Monat meine perfekte Form bekommen möchte, aber jetzt weiß ich,
+												dass ProduSlim selbst in den schlimmsten Situationen hilft.
+											</p>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="subtitle lt158">
+						Was sagen die Nutzer von ProduSlim darüber auf Instagram?
+					</div>
+					<div class="slider_container_2">
+						<ul class="insta_slider">
+							<li class="item">
+								<div class="image image_1"></div>
+								<div class="descripton">
+									<div class="review_head">
+										<div class="icon avatar_1"></div>
+										<div class="name lt162">
+											Theresa
+										</div>
+									</div>
+									<div class="review_body">
+										<div class="text">
+											<p class="lt163">
+												Ich fing an, weniger zu essen und es scheint natürlich für mich zu sein.
+												In nur vier Wochen habe ich etwa zehn Kilo abgenommen 😉. Mit Hilfe von
+												ProduSlim war ich auf meiner Hochzeit mehr als vorbereitet. Ich habe
+												viele Kritiken gelesen und beschlossen, es selbst auszuprobieren. Ich
+												bin mit den Ergebnissen sehr zufrieden .
+											</p>
+											<div class="hash_tags lt164">
+												#ProduSlim #loseweight #loseweightnow #loseweightfast
+												#loseweightfeelgreat #loseweightgetfit
+											</div>
+										</div>
+									</div>
+									<div class="reviews_bottom">
+										<div class="icon_1"></div>
+										<div class="icon_2"></div>
+									</div>
+								</div>
+							</li>
+							<li class="item">
+								<div class="image image_2"></div>
+								<div class="descripton">
+									<div class="review_head">
+										<div class="icon avatar_2"></div>
+										<div class="name lt165">
+											Senta
+										</div>
+									</div>
+									<div class="review_body">
+										<div class="text">
+											<p class="lt166"><span>Senta</span> Hartnäckiges Fett loszuwerden, nachdem
+												ich fast drei Jahre lang alles versucht habe, scheint ein wirkliches
+												Wunder zu sein 😃 Mein Leben hat sich verändert, nachdem ich ProduSlim
+												benutzt habe.
+												Ich glaubte nicht, dass man 30 kilos abnehmen kann, ohne viel Sport zu
+												treiben, aber es ist wahr. Ich glaube, dass es der beste Weg ist, um
+												Gewicht zu verlieren!
+											</p>
+											<div class="hash_tags lt167">
+												#loseweightnowaskmehow #loseweightnaturally #loseweighthealthy
+												#loseweightaskmehow#ProduSlim
+											</div>
+										</div>
+									</div>
+									<div class="reviews_bottom">
+										<div class="icon_1"></div>
+										<div class="icon_2"></div>
+									</div>
+								</div>
+							</li>
+							<li class="item">
+								<div class="image image_3"></div>
+								<div class="descripton">
+									<div class="review_head">
+										<div class="icon avatar_3"></div>
+										<div class="name lt168">
+											Meins
+										</div>
+									</div>
+									<div class="review_body">
+										<div class="text">
+											<p class="lt169"><span>Meins</span> Nachdem ich 40 geworden bin, merke ich
+												plötzlich, wie schwer es sein kann, in Form zu bleiben. Sie können nicht
+												alles essen, was Sie in Ihren Vierzigern wollen, da es leicht auf Ihrer
+												Taille
+												gespeichert werden kann. ProduSlim verbrennt im Vergleich zu anderen
+												Produkten Fett in den gewünschten Bereichen des Körpers 😋
+											</p>
+											<div class="hash_tags lt170">
+												#loseweightinthekitchen #loseweightwithme#ProduSlim
+											</div>
+										</div>
+									</div>
+									<div class="reviews_bottom">
+										<div class="icon_1"></div>
+										<div class="icon_2"></div>
+									</div>
+								</div>
+							</li>
+							<li class="item">
+								<div class="image image_4"></div>
+								<div class="descripton">
+									<div class="review_head">
+										<div class="icon avatar_4"></div>
+										<div class="name lt171">
+											Lübbert
+										</div>
+									</div>
+									<div class="review_body">
+										<div class="text">
+											<p class="lt172"><span>Lübbert</span> Ich bin sehr beeindruckt von
+												ProduSlim. Ich benutzte es in meinem Trainingszyklus, um die
+												überschüssige Flüssigkeit aus meinem Körper zu entfernen 😃 Es hat
+												wirklich funktioniert. In nur
+												zwei Wochen konnte ich die Anforderungen meiner Gewichtsklasse erfüllen.
+												Wenn Sie schnell und effizient abnehmen möchten, dann ist ProduSlim Ihre
+												Antwort!
+											</p>
+											<div class="hash_tags lt173">
+												#loseweighttheeasyway #ProduSlim#loseweight #loseweightnow
+												#loseweightfast #loseweightfeelgreat #loseweightnowaskmehow
+											</div>
+										</div>
+									</div>
+									<div class="reviews_bottom">
+										<div class="icon_1"></div>
+										<div class="icon_2"></div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<div class="million_customer">
+			<div class="wrapper">
+				<div class="image">
+					<div class="box"></div>
+				</div>
+				<div class="lose_chance__text">
+					<div class="lose_chance__desc lt177">
+						Über 1 Million Kunden nennen ProduSlim ihr Traumprodukt, um Gewicht zu verlieren
+					</div>
+					<div class="lose_chance__title lt178">
+						Warum Sind Sie nicht dabei?
+					</div>
+					<a class="scroll_to_button" href="#scroll_to_form"><button class="submit_form scroll_to_button form_top__submit" type="submit"><span class="lt179">Bestellen</span></button></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="stubborn">
+			<div class="wrapper">
+				<div class="stubborn__title lt195">
+					<span>Warum ProduSlim die Beste</span> Entscheidung ist, um Hartnäckiges<strong> Fett zu
+						Verbrennen?</strong>
+				</div>
+				<div class="stubborn__flex">
+					<div class="stubborn__image"><img alt="" src="images/stubborn.jpg"></div>
+					<div class="stubborn__text">
+						<div class="header__list">
+							<div class="header__list__item lt196">
+								Verringert das Körperfett
+							</div>
+							<div class="header__list__item lt197">
+								Verbessert den Zustand des Herzens
+							</div>
+							<div class="header__list__item lt198">
+								Beeinflusst positiv die Bauchspeicheldrüse
+							</div>
+							<div class="header__list__item lt199">
+								Fördert den rationalen Stoffwechsel
+							</div>
+							<div class="header__list__item lt200">
+								Aktiviert die Fettverbrennung
+							</div>
+							<div class="header__list__item lt201">
+								Entgiftet den Körper
+							</div>
+							<div class="header__list__item lt202">
+								Tötet Essattacken
+							</div>
+							<div class="header__list__item lt203">
+								100% natürlich
+							</div>
+							<div class="header__list__item lt204">
+								Völlig sicher
+							</div>
+							<div class="header__list__item lt205">
+								Klinisch geprüft
+							</div>
+						</div>
+						<div class="stubborn__desc lt206">
+							Verschieben Sie Nicht Ihre <span>“Perfekten Körperpläne”</span> Auf Später!
+						</div>
+						<a class="scroll_to_button" href="#scroll_to_form"><button class="submit_form scroll_to_button form_top__submit" type="submit"><span class="lt207">Bestellen</span></button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="how_order">
+			<div class="wrapper">
+				<div class="how_order__title">
+					<span class="lt208">Wie kann ich bestellen?</span>
+				</div>
+				<ul class="how_order__list">
+					<li>
+						<div class="how_order__image"><img alt="" src="images/order_1.png"></div>
+						<div class="box">
+							<div class="how_order__caption lt209">
+								Füllen Sie das untenstehende Bestellformular aus
+							</div>
+							<div class="how_order__desc lt210">
+								Ihr Name und Ihre Handynummer
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="how_order__image"><img alt="" src="images/order_2.png"></div>
+						<div class="box">
+							<div class="how_order__caption lt211">
+								Bestätigen Sie die Lieferadresse, den Typ und das Datum
+							</div>
+							<div class="how_order__desc lt212">
+								Der Manager wird Sie nach der Bestellung anrufen
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="how_order__image"><img alt="" src="images/order_3.png"></div>
+						<div class="box">
+							<div class="how_order__caption lt213">
+								Erhalt der Ware und Bezahlung
+							</div>
+							<div class="how_order__desc lt214">
+								Zahlung bei Lieferung an Kurierdienst
+							</div>
+						</div>
+					</li>
+				</ul>
+				<div class="delivery">
+					<div class="delivery__flex">
+						<div class="delivery__text">
+							<div class="delivery__title lt215">
+								Lieferung nach ganz Europa
+							</div>
+							<ul class="delivery_list">
+								<li>
+									<p class="lt216">Sie erhalten Ihren ProduSlim innerhalb von 4-7 tagen nach der
+										Bestellung.</p>
+								</li>
+								<li>
+									<p class="lt217">Bezahlen Sie erst nach Empfang des Pakets!</p>
+								</li>
+							</ul>
+							<div class="delivery__icons_list">
+								<ul>
+									<li><img alt="" src="images/delivery_1.png"></li>
+									<li><img alt="" src="images/delivery_2.png"></li>
+									<li><img alt="" src="images/delivery_3.png"></li>
+									<li><img alt="" src="images/delivery_4.png"></li>
+									<li><img alt="" src="images/delivery_5.png"></li>
+									<li><img alt="" src="images/delivery_6.png"></li>
+									<li><img alt="" src="images/delivery_7.png"></li>
+								</ul>
+							</div>
+						</div>
+						<div class="delivery__image"><img alt="" src="images/delivery.png"></div>
+					</div>
+				</div>
+				<div class="footer__title lt218">
+					Stellen Sie sich vor, wie sich Ihr Leben verändert, <span> wenn Sie das hartnäckige Fett
+						loswerden!</span>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="wrapper">
+				<div class="footer__colums">
+					<div class="footer__colum_2">
+						<div class="footer__title show_mobile lt219">
+							Stellen Sie sich vor, wie sich Ihr Leben verändert, <span> wenn Sie das hartnäckige Fett
+								loswerden!</span>
+						</div>
+						<ul class="footer__list">
+							<li><span class="lt220">Keine Diäten!</span></li>
+							<li><span class="lt221">Keine Operation!</span></li>
+							<li><span class="lt222">Keine Nebenwirkungen!</span></li>
+							<li><span class="lt223">Keine anstrengenden Übungen!</span></li>
+						</ul>
+						<div class="footer__image">
+							<div class="img_woman"></div>
+						</div>
+					</div>
+					<div class="footer__colum_3">
+						<div class="form_top header__form" id="form">
+							<div class="form_top__discount">-50%</div>
+							<div class="form_top__price_container">
+								<div class="form_top__price_old">
+									<div class="form_top__price_old_label lt225">
+										Verkauf:
+									</div>
+									<div class="form_top__price_old_value"><span class="old_price_val"><x-oldprice>99.80</x-oldprice></span>
+										<span class="old_price_cur"><x-currency>€</x-currency></span></div>
+								</div>
+								<div class="form_top__price_new">
+									<div class="form_top__price_val">
+										<span class="new_price_val"><x-newprice>49.90</x-newprice></span> <span class="new_price_cur"><x-currency>€</x-currency></span>
+										<div class="form_top__icon_new lt228">
+											Neu!
+										</div>
+									</div>
+									<div class="form_top__price_label lt229">
+										+ <span>SCHNELLE </span>LIEFERUNG
+									</div>
+								</div>
+							</div>
+							<div class="timer" data-timer="">
+								<div class="unit days" data-pattern="00">
+									<div class="value">00</div>
+									<div class="desc lt230">
+										Tage
+									</div>
+								</div>
+								<div class="unit hours" data-pattern="{hnn}">
+									<div class="value">00</div>
+									<div class="desc lt231">
+										Stunden
+									</div>
+								</div>
+								<div class="unit minutes" data-pattern="{mnn}">
+									<div class="value">00</div>
+									<div class="desc lt232">
+										Minuten
+									</div>
+								</div>
+								<div class="unit seconds" data-pattern="{snn}">
+									<div class="value">00</div>
+									<div class="desc lt233">
+										Sekunden
+									</div>
+								</div>
+							</div>
+							<div class="form_top__title lt234">
+								Bestellen mit <span>50% Rabatt!</span>
+							</div>
+							<form class="form landing__form" action="https://healthbestblog.space/cpatl/api.php" method="post">
+								   
+    <select name="offer" class="form-control country_chang" style="display: none;">
+        <option data-country-code="AT" selected="selected" value="22359">
+            Австрия        </option>
+    </select>
+
+     
+								<div class="form_top__field form_top__field-name">
+									<input class="form_top__input" type="text" name="name" placeholder="Ihr Name:" required>
+								</div>
+								<div class="form_top__field form_top__field-phone">
+									<input class="form_top__input" type="tel" name="phone" placeholder="+43 123456789" required>
+								</div>
+								<button class="submit_form form_top__submit" type="submit"><span class="big lt236">Bestellen</span></button>
+								      <input type="hidden" name="stream_hid" value="xlDU59ny">
+      <input type="hidden" name="offer_id" value="5636">
+
+      
+      <input type="hidden" name="country" value="AT"> 
+
+      <input type="hidden" name="sid1" value="alex">
+      <input type="hidden" name="sid2" value="alex2">
+      <input type="hidden" name="sid3" value="alex3">
+      <input type="hidden" name="redirect_url" value="https://amazinghealth.github.io/germitox-ita/success/index.html">
+							</form>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	
+		<script src="js/jquery.bxslider.min.js"></script>
+		<script src="js/main.js"></script>
+	</div>
+	<link rel="stylesheet" href="css/cod_line.css">
+
+
+	<link rel="stylesheet" href="css/gs-tooltip.css">
+	<script src="js/gs-tooltip.js"></script>
+
+	<center style="margin: 30px auto"><p>OOO "OSTROV PRODAZH" OGRN: 1197746695530 VAT: 7708365555</p>
+<p>129090, Moscow, pereulok Zhivarev, house 8, stroenie 3, flat 16 email: ostrov.prodazh@mail.com Skype: ostrov.prodazh@mail.com</p> 
+
+
+    
+            <p class="conf-link doclinks">
+        <a class="nav-link" href="" onclick="window.open('/policy_en.php'); return false;">Privacy Policy</a>
+          |
+        <a class="nav-link" href="" onclick="window.open('/terms_en.php'); return false;">Terms & Conditions</a>
+      </p>
+      
+    
+</center>
+</body>
+
+</html>
